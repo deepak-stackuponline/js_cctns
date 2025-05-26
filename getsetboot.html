@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management System</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .main-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      margin: 2rem auto;
+      max-width: 1200px;
+    }
+    
+    .header-section {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      border-radius: 20px 20px 0 0;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .form-section {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .table-section {
+      margin: 1.5rem;
+    }
+    
+    .table-container {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      color: white;
+    }
+    
+    .btn-success-gradient {
+      background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn-success-gradient:hover {
+      transform: translateY(-1px);
+      color: white;
+    }
+    
+    .btn-danger-gradient {
+      background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn-danger-gradient:hover {
+      transform: translateY(-1px);
+      color: white;
+    }
+    
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .table {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .table thead th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .table tbody tr {
+      transition: all 0.3s ease;
+    }
+    
+    .table tbody tr:hover {
+      background-color: rgba(102, 126, 234, 0.05);
+      transform: scale(1.01);
+    }
+    
+    .badge-admitted {
+      background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+    }
+    
+    .badge-not-admitted {
+      background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    }
+    
+    .stats-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .stats-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .form-check-input:checked {
+      background-color: #667eea;
+      border-color: #667eea;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+    
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="main-container">
+      <!-- Header Section -->
+      <div class="header-section">
+        <h1 class="mb-0"><i class="bi bi-mortarboard-fill me-3"></i>Student Management System</h1>
+        <p class="mb-0 mt-2">Efficiently manage student admissions and records</p>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="row p-4">
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <div class="stats-number" id="totalStudents">0</div>
+            <div class="text-muted">Total Students</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <div class="stats-number text-success" id="admittedCount">0</div>
+            <div class="text-muted">Admitted</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <div class="stats-number text-danger" id="notAdmittedCount">0</div>
+            <div class="text-muted">Not Admitted</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Student Form -->
+      <div class="form-section">
+        <h3 class="mb-4"><i class="bi bi-person-plus-fill me-2"></i>Add New Student</h3>
+        <form onsubmit="addStudent(event)">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="name" class="form-label">Student Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                <input type="text" class="form-control" id="name" placeholder="Enter student name" required>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="roll" class="form-label">Roll Number</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                <input type="text" class="form-control" id="roll" placeholder="Enter roll number" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label">Admission Status</label>
+            <div class="mt-2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="isAdmitted" id="admitYes" value="yes" checked>
+                <label class="form-check-label" for="admitYes">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>Admitted
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="isAdmitted" id="admitNo" value="no">
+                <label class="form-check-label" for="admitNo">
+                  <i class="bi bi-x-circle-fill text-danger me-1"></i>Not Admitted
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-gradient btn-lg">
+            <i class="bi bi-plus-circle-fill me-2"></i>Add Student
+          </button>
+        </form>
+      </div>
+
+      <!-- Admitted Students Table -->
+      <div class="table-section">
+        <div class="table-container">
+          <h3 class="mb-4 text-success">
+            <i class="bi bi-check-circle-fill me-2"></i>Admitted Students
+            <span class="badge badge-admitted ms-2" id="admittedBadge">0</span>
+          </h3>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="bi bi-person-fill me-1"></i>Name</th>
+                  <th><i class="bi bi-hash me-1"></i>Roll Number</th>
+                  <th><i class="bi bi-check-circle me-1"></i>Status</th>
+                  <th><i class="bi bi-gear-fill me-1"></i>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admittedTableBody">
+                <!-- Admitted students will appear here -->
+              </tbody>
+            </table>
+            <div id="admittedEmpty" class="empty-state">
+              <i class="bi bi-inbox"></i>
+              <h5>No admitted students yet</h5>
+              <p>Students marked as admitted will appear here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Not Admitted Students Table -->
+      <div class="table-section">
+        <div class="table-container">
+          <h3 class="mb-4 text-danger">
+            <i class="bi bi-x-circle-fill me-2"></i>Not Admitted Students
+            <span class="badge badge-not-admitted ms-2" id="notAdmittedBadge">0</span>
+          </h3>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="bi bi-person-fill me-1"></i>Name</th>
+                  <th><i class="bi bi-hash me-1"></i>Roll Number</th>
+                  <th><i class="bi bi-x-circle me-1"></i>Status</th>
+                  <th><i class="bi bi-gear-fill me-1"></i>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="notAdmittedTableBody">
+                <!-- Not admitted students will appear here -->
+              </tbody>
+            </table>
+            <div id="notAdmittedEmpty" class="empty-state">
+              <i class="bi bi-inbox"></i>
+              <h5>No pending students</h5>
+              <p>Students not yet admitted will appear here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let students = [];
+
+    function addStudent(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById("name").value.trim();
+      const roll = document.getElementById("roll").value.trim();
+      const admittedValue = document.querySelector('input[name="isAdmitted"]:checked').value;
+
+      if (!name || !roll) {
+        showAlert("Please fill out all fields.", "warning");
+        return;
+      }
+
+      // Check for duplicate roll numbers
+      if (students.some(student => student.roll === roll)) {
+        showAlert("A student with this roll number already exists!", "danger");
+        return;
+      }
+
+      const isAdmitted = admittedValue === "yes";
+
+      students.push({ name, roll, isAdmitted });
+
+      // Reset form
+      document.getElementById("name").value = '';
+      document.getElementById("roll").value = '';
+      document.getElementById("admitYes").checked = true;
+
+      showAlert(`Student ${name} has been added successfully!`, "success");
+      renderTables();
+      updateStats();
+    }
+
+    function toggleAdmission(index) {
+      const student = students[index];
+      student.isAdmitted = !student.isAdmitted;
+      
+      const action = student.isAdmitted ? "admitted" : "revoked";
+      showAlert(`${student.name}'s admission has been ${action}.`, "info");
+      
+      renderTables();
+      updateStats();
+    }
+
+    function deleteStudent(index) {
+      const student = students[index];
+      
+      // Create custom confirmation modal
+      if (confirm(`Are you sure you want to delete ${student.name}?\n\nThis action cannot be undone.`)) {
+        students.splice(index, 1);
+        showAlert(`${student.name} has been deleted.`, "warning");
+        renderTables();
+        updateStats();
+      }
+    }
+
+    function showAlert(message, type) {
+      // Create toast notification
+      const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+      
+      const toast = document.createElement('div');
+      toast.className = `toast align-items-center text-bg-${type} border-0`;
+      toast.setAttribute('role', 'alert');
+      toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="bi bi-${getIconForType(type)} me-2"></i>${message}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+      
+      // Remove toast after it's hidden
+      toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+      });
+    }
+
+    function createToastContainer() {
+      const container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.className = 'toast-container position-fixed top-0 end-0 p-3';
+      container.style.zIndex = '9999';
+      document.body.appendChild(container);
+      return container;
+    }
+
+    function getIconForType(type) {
+      const icons = {
+        success: 'check-circle-fill',
+        danger: 'exclamation-triangle-fill',
+        warning: 'exclamation-triangle-fill',
+        info: 'info-circle-fill'
+      };
+      return icons[type] || 'info-circle-fill';
+    }
+
+    function updateStats() {
+      const total = students.length;
+      const admitted = students.filter(s => s.isAdmitted).length;
+      const notAdmitted = total - admitted;
+
+      document.getElementById('totalStudents').textContent = total;
+      document.getElementById('admittedCount').textContent = admitted;
+      document.getElementById('notAdmittedCount').textContent = notAdmitted;
+      document.getElementById('admittedBadge').textContent = admitted;
+      document.getElementById('notAdmittedBadge').textContent = notAdmitted;
+    }
+
+    function renderTables() {
+      const admittedBody = document.getElementById("admittedTableBody");
+      const notAdmittedBody = document.getElementById("notAdmittedTableBody");
+      const admittedEmpty = document.getElementById("admittedEmpty");
+      const notAdmittedEmpty = document.getElementById("notAdmittedEmpty");
+
+      admittedBody.innerHTML = "";
+      notAdmittedBody.innerHTML = "";
+
+      const admittedStudents = students.filter(s => s.isAdmitted);
+      const notAdmittedStudents = students.filter(s => !s.isAdmitted);
+
+      // Render admitted students
+      if (admittedStudents.length === 0) {
+        admittedEmpty.style.display = 'block';
+      } else {
+        admittedEmpty.style.display = 'none';
+        admittedStudents.forEach(function(student, originalIndex) {
+          const index = students.findIndex(s => s === student);
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><strong>${student.name}</strong></td>
+            <td><code>${student.roll}</code></td>
+            <td><span class="badge badge-admitted"><i class="bi bi-check-circle-fill me-1"></i>Admitted</span></td>
+            <td>
+              <button class="btn btn-warning btn-sm me-1" onclick="toggleAdmission(${index})" title="Revoke Admission">
+                <i class="bi bi-x-circle-fill"></i> Revoke
+              </button>
+              <button class="btn btn-danger-gradient btn-sm" onclick="deleteStudent(${index})" title="Delete Student">
+                <i class="bi bi-trash-fill"></i> Delete
+              </button>
+            </td>
+          `;
+          admittedBody.appendChild(row);
+        });
+      }
+
+      // Render not admitted students
+      if (notAdmittedStudents.length === 0) {
+        notAdmittedEmpty.style.display = 'block';
+      } else {
+        notAdmittedEmpty.style.display = 'none';
+        notAdmittedStudents.forEach(function(student, originalIndex) {
+          const index = students.findIndex(s => s === student);
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><strong>${student.name}</strong></td>
+            <td><code>${student.roll}</code></td>
+            <td><span class="badge badge-not-admitted"><i class="bi bi-x-circle-fill me-1"></i>Not Admitted</span></td>
+            <td>
+              <button class="btn btn-success-gradient btn-sm me-1" onclick="toggleAdmission(${index})" title="Admit Student">
+                <i class="bi bi-check-circle-fill"></i> Admit
+              </button>
+              <button class="btn btn-danger-gradient btn-sm" onclick="deleteStudent(${index})" title="Delete Student">
+                <i class="bi bi-trash-fill"></i> Delete
+              </button>
+            </td>
+          `;
+          notAdmittedBody.appendChild(row);
+        });
+      }
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+      renderTables();
+      updateStats();
+    });
+  </script>
+</body>
+</html>

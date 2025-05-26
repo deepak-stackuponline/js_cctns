@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set and Get Object Items</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, button { margin: 5px 0; }
+    #output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Student Details</h2>
+<label>Student Name</label>
+<input type="text" id="studentName" placeholder="Student Name"/>
+<label>Roll Number</label>
+<input type="text" id="studentClass" placeholder="Student Class"/>
+<input type="button" onclick="addStudent()" value="submit"/>
+<label>Is Admitted?</label>
+<input type="radio" name="isAdmitted" value="true" /> Yes
+<input type="radio" name="isAdmitted" value="false" /> No
+
+
+<script>
+const studentArray = [];
+    const newStudent = {
+    name: "",
+    class: "",
+
+    set nameFunc(namedata) {
+        this.name = namedata;
+    },
+
+    set classFunc(classdata){
+        this.class = classdata;
+    },
+    get getnamefunc() {
+            return this.name;
+  },
+    set admittedStatus(admittedData){
+        this.isAdmitted = admittedData;
+    }
+  };
+ 
+
+    function addStudent() {
+  const studentName = document.getElementById("studentName").value;
+  const studentClass = document.getElementById("studentClass").value;
+  const radios = document.querySelector('input[name="isAdmitted"]:checked')?.value;
+
+  if (!studentName || !studentClass || !radios) {
+    alert("Please fill all fields and select admission status.");
+    return;
+  }
+  else{
+    newStudent.admittedStatus = radios;
+    newStudent.nameFunc = studentName;
+    newStudent.classFunc = studentClass;
+  }
+
+    
+
+
+  const admittedStatus = radios;
+  studentArray.push(newStudent);
+
+  console.log(`${newStudent.name} is the get value`);
+  console.log("New Entry:", newStudent);
+  console.log("Complete Array:", studentArray);
+}
+
+
+</script>
+
+</body>
+</html>

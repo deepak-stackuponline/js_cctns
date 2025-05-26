@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover, .btn-danger:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .table-section {
+            padding: 30px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .search-box {
+            padding: 10px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 250px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .student-count {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Student Management System</h1>
+            <p>Manage your student records with ease</p>
+        </div>
+
+        <div class="form-section">
+            <form id="studentForm">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="studentName">Student Name</label>
+                        <input type="text" id="studentName" placeholder="Enter student name" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="rollNumber">Roll Number</label>
+                        <input type="text" id="rollNumber" placeholder="Enter roll number" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Add Student</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Student Records</h2>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <span class="student-count" id="studentCount">0 Students</span>
+                    <input type="text" id="searchInput" class="search-box" placeholder="Search students...">
+                </div>
+            </div>
+            
+            <div id="tableContainer">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📚</div>
+                    <h3>No students found</h3>
+                    <p>Add your first student using the form above</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class StudentManager {
+            constructor() {
+                this.students = [];
+                this.editingIndex = -1;
+                this.nextId = 1;
+                this.init();
+            }
+
+            init() {
+                this.loadFromStorage();
+                this.bindEvents();
+                this.renderTable();
+                this.updateStudentCount();
+            }
+
+            bindEvents() {
+                document.getElementById('studentForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSubmit();
+                });
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.filterStudents(e.target.value);
+                });
+            }
+
+            handleSubmit() {
+                const name = document.getElementById('studentName').value.trim();
+                const rollNumber = document.getElementById('rollNumber').value.trim();
+
+                if (!name || !rollNumber) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                // Check for duplicate roll number (excluding current editing student)
+                const isDuplicate = this.students.some((student, index) => 
+                    student.rollNumber.toLowerCase() === rollNumber.toLowerCase() && 
+                    index !== this.editingIndex
+                );
+
+                if (isDuplicate) {
+                    alert('Roll number already exists!');
+                    return;
+                }
+
+                if (this.editingIndex >= 0) {
+                    // Update existing student
+                    this.students[this.editingIndex] = {
+                        ...this.students[this.editingIndex],
+                        name: name,
+                        rollNumber: rollNumber
+                    };
+                    this.editingIndex = -1;
+                    document.getElementById('submitBtn').textContent = 'Add Student';
+                } else {
+                    // Add new student
+                    this.students.push({
+                        id: this.nextId++,
+                        name: name,
+                        rollNumber: rollNumber
+                    });
+                }
+
+                this.saveToStorage();
+                this.renderTable();
+                this.updateStudentCount();
+                this.clearForm();
+            }
+
+            editStudent(index) {
+                const student = this.students[index];
+                document.getElementById('studentName').value = student.name;
+                document.getElementById('rollNumber').value = student.rollNumber;
+                this.editingIndex = index;
+                document.getElementById('submitBtn').textContent = 'Update Student';
+                document.getElementById('studentName').focus();
+            }
+
+            deleteStudent(index) {
+                if (confirm('Are you sure you want to delete this student?')) {
+                    this.students.splice(index, 1);
+                    this.saveToStorage();
+                    this.renderTable();
+                    this.updateStudentCount();
+                    
+                    // Reset form if we were editing the deleted student
+                    if (this.editingIndex === index) {
+                        this.clearForm();
+                        this.editingIndex = -1;
+                        document.getElementById('submitBtn').textContent = 'Add Student';
+                    } else if (this.editingIndex > index) {
+                        this.editingIndex--;
+                    }
+                }
+            }
+
+            clearForm() {
+                document.getElementById('studentForm').reset();
+                this.editingIndex = -1;
+                document.getElementById('submitBtn').textContent = 'Add Student';
+            }
+
+            filterStudents(searchTerm) {
+                const filteredStudents = this.students.filter(student =>
+                    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    student.rollNumber.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                this.renderTable(filteredStudents);
+            }
+
+            renderTable(studentsToRender = null) {
+                const students = studentsToRender || this.students;
+                const tbody = document.getElementById('studentTableBody');
+                const emptyState = document.getElementById('emptyState');
+                const table = document.getElementById('studentTable');
+
+                if (students.length === 0) {
+                    table.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                table.style.display = 'table';
+                emptyState.style.display = 'none';
+
+                tbody.innerHTML = students.map((student, index) => `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${this.escapeHtml(student.name)}</td>
+                        <td>${this.escapeHtml(student.rollNumber)}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn btn-secondary" onclick="studentManager.editStudent(${this.students.indexOf(student)})">
+                                    Edit
+                                </button>
+                                <button class="btn btn-danger" onclick="studentManager.deleteStudent(${this.students.indexOf(student)})">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            updateStudentCount() {
+                const count = this.students.length;
+                document.getElementById('studentCount').textContent = 
+                    `${count} Student${count !== 1 ? 's' : ''}`;
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            saveToStorage() {
+                // Note: Using a simple variable for storage since localStorage is not available
+                // In a real application, you would use localStorage.setItem('students', JSON.stringify(this.students))
+            }
+
+            loadFromStorage() {
+                // Note: In a real application, you would load from localStorage
+                // const saved = localStorage.getItem('students');
+                // if (saved) {
+                //     this.students = JSON.parse(saved);
+                //     this.nextId = Math.max(...this.students.map(s => s.id), 0) + 1;
+                // }
+            }
+        }
+
+        // Initialize the application
+        const studentManager = new StudentManager();
+    </script>
+</body>
+</html>

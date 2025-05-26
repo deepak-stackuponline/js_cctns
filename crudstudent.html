@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .header-section h1 {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+        
+        .table-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-warning {
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .btn-danger {
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table thead th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .alert {
+            border-radius: 15px;
+            border: none;
+            padding: 1rem 1.5rem;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header-section">
+                <h1><i class="fas fa-graduation-cap me-3"></i>Student Management System</h1>
+                <p class="text-muted mb-0">Manage student records with ease</p>
+            </div>
+            
+            <!-- Alert Messages -->
+            <div id="alertContainer"></div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <h3 class="mb-3"><i class="fas fa-user-plus me-2"></i><span id="formTitle">Add New Student</span></h3>
+                <form id="studentForm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="studentName" class="form-label">Student Name</label>
+                                <input type="text" class="form-control" id="studentName" placeholder="Enter student name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="rollNumber" class="form-label">Roll Number</label>
+                                <input type="text" class="form-control" id="rollNumber" placeholder="Enter roll number" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label class="form-label">&nbsp;</label>
+                                <div>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-plus me-1"></i><span id="submitBtnText">Add Student</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="cancelButtonRow" style="display: none;">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-secondary" id="cancelEdit">
+                                <i class="fas fa-times me-1"></i>Cancel Edit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Table Section -->
+            <div class="table-section">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3><i class="fas fa-list me-2"></i>Student Records</h3>
+                    <span class="badge bg-primary fs-6" id="studentCount">Total: 0</span>
+                </div>
+                
+                <div id="tableContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h4>No Students Found</h4>
+                        <p>Add your first student to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        class StudentManager {
+            constructor() {
+                this.students = [];
+                this.editingIndex = -1;
+                this.init();
+            }
+            
+            init() {
+                this.bindEvents();
+                this.renderTable();
+                this.updateStudentCount();
+            }
+            
+            bindEvents() {
+                document.getElementById('studentForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSubmit();
+                });
+                
+                document.getElementById('cancelEdit').addEventListener('click', () => {
+                    this.cancelEdit();
+                });
+            }
+            
+            handleSubmit() {
+                const name = document.getElementById('studentName').value.trim();
+                const rollNumber = document.getElementById('rollNumber').value.trim();
+                
+                if (!name || !rollNumber) {
+                    this.showAlert('Please fill in all fields!', 'danger');
+                    return;
+                }
+                
+                // Check for duplicate roll numbers (excluding current editing student)
+                const duplicateIndex = this.students.findIndex((student, index) => 
+                    student.rollNumber.toLowerCase() === rollNumber.toLowerCase() && index !== this.editingIndex
+                );
+                
+                if (duplicateIndex !== -1) {
+                    this.showAlert('Roll number already exists!', 'danger');
+                    return;
+                }
+                
+                if (this.editingIndex >= 0) {
+                    this.updateStudent(name, rollNumber);
+                } else {
+                    this.addStudent(name, rollNumber);
+                }
+            }
+            
+            addStudent(name, rollNumber) {
+                const student = {
+                    id: Date.now(),
+                    name: name,
+                    rollNumber: rollNumber,
+                    createdAt: new Date().toLocaleDateString()
+                };
+                
+                this.students.push(student);
+                this.showAlert('Student added successfully!', 'success');
+                this.clearForm();
+                this.renderTable();
+                this.updateStudentCount();
+            }
+            
+            updateStudent(name, rollNumber) {
+                this.students[this.editingIndex] = {
+                    ...this.students[this.editingIndex],
+                    name: name,
+                    rollNumber: rollNumber
+                };
+                
+                this.showAlert('Student updated successfully!', 'success');
+                this.cancelEdit();
+                this.renderTable();
+            }
+            
+            editStudent(index) {
+                const student = this.students[index];
+                document.getElementById('studentName').value = student.name;
+                document.getElementById('rollNumber').value = student.rollNumber;
+                
+                this.editingIndex = index;
+                document.getElementById('formTitle').textContent = 'Edit Student';
+                document.getElementById('submitBtnText').textContent = 'Update Student';
+                document.getElementById('cancelButtonRow').style.display = 'block';
+                
+                // Scroll to form
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            cancelEdit() {
+                this.editingIndex = -1;
+                this.clearForm();
+                document.getElementById('formTitle').textContent = 'Add New Student';
+                document.getElementById('submitBtnText').textContent = 'Add Student';
+                document.getElementById('cancelButtonRow').style.display = 'none';
+            }
+            
+            deleteStudent(index) {
+                if (confirm('Are you sure you want to delete this student?')) {
+                    const student = this.students[index];
+                    this.students.splice(index, 1);
+                    this.showAlert(`Student "${student.name}" deleted successfully!`, 'warning');
+                    
+                    // If we were editing this student, cancel the edit
+                    if (this.editingIndex === index) {
+                        this.cancelEdit();
+                    } else if (this.editingIndex > index) {
+                        this.editingIndex--;
+                    }
+                    
+                    this.renderTable();
+                    this.updateStudentCount();
+                }
+            }
+            
+            clearForm() {
+                document.getElementById('studentForm').reset();
+            }
+            
+            renderTable() {
+                const container = document.getElementById('tableContainer');
+                
+                if (this.students.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <h4>No Students Found</h4>
+                            <p>Add your first student to get started!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const tableHTML = `
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col"><i class="fas fa-user me-1"></i>Name</th>
+                                    <th scope="col"><i class="fas fa-id-badge me-1"></i>Roll Number</th>
+                                    <th scope="col"><i class="fas fa-calendar me-1"></i>Added Date</th>
+                                    <th scope="col"><i class="fas fa-cogs me-1"></i>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${this.students.map((student, index) => `
+                                    <tr class="fade-in">
+                                        <td><strong>${index + 1}</strong></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px; font-size: 14px; font-weight: bold;">
+                                                    ${student.name.charAt(0).toUpperCase()}
+                                                </div>
+                                                ${student.name}
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-secondary">${student.rollNumber}</span></td>
+                                        <td><small class="text-muted">${student.createdAt}</small></td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm me-1" onclick="studentManager.editStudent(${index})" title="Edit Student">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" onclick="studentManager.deleteStudent(${index})" title="Delete Student">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                
+                container.innerHTML = tableHTML;
+            }
+            
+            updateStudentCount() {
+                document.getElementById('studentCount').textContent = `Total: ${this.students.length}`;
+            }
+            
+            showAlert(message, type) {
+                const alertContainer = document.getElementById('alertContainer');
+                const alertId = 'alert-' + Date.now();
+                
+                const alertHTML = `
+                    <div id="${alertId}" class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                
+                alertContainer.innerHTML = alertHTML;
+                
+                // Auto-dismiss after 3 seconds
+                setTimeout(() => {
+                    const alert = document.getElementById(alertId);
+                    if (alert) {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    }
+                }, 3000);
+            }
+        }
+        
+        // Initialize the application
+        const studentManager = new StudentManager();
+        
+        // Add some sample data for demonstration (remove this in production)
+        setTimeout(() => {
+            studentManager.students = [
+                { id: 1, name: "John Doe", rollNumber: "CS001", createdAt: "5/26/2025" },
+                { id: 2, name: "Jane Smith", rollNumber: "CS002", createdAt: "5/26/2025" },
+                { id: 3, name: "Mike Johnson", rollNumber: "CS003", createdAt: "5/26/2025" }
+            ];
+            studentManager.renderTable();
+            studentManager.updateStudentCount();
+        }, 100);
+    </script>
+</body>
+</html>
