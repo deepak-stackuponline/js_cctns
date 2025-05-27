@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set and Get Object Items</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, button { margin: 5px 0; }
+    #output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Student Details</h2>
+<label>Student Name</label>
+<input type="text" id="studentName" placeholder="Student Name"/>
+<label>Roll Number</label>
+<input type="text" id="studentClass" placeholder="Student Class"/>
+<input type="button" onclick="addStudent()" value="submit"/>
+<label>Is Admitted?</label>
+<input type="radio" name="isAdmitted" value="true" /> Yes
+<input type="radio" name="isAdmitted" value="false" /> No
+
+
+<script>
+const studentArray = [];
+
+
+
+const newStudent = {
+    name: "",
+    class: "",
+    isAdmitted: "",
+
+    set nameFunc(namedata) {
+      this.name = namedata;
+    },
+
+    set classFunc(classdata) {
+      this.class = classdata;
+    },
+
+    set admittedStatus(status) {
+      this.isAdmitted = status;
+    },
+
+    get getName() {
+      return this.name;
+    }
+  };
+
+
+  
+
+function addStudent() {
+  const studentName = document.getElementById("studentName").value.trim();
+  const studentClass = document.getElementById("studentClass").value;
+  const admittedValue = document.querySelector('input[name="isAdmitted"]:checked')?.value;
+
+  if (!studentName || !studentClass || !admittedValue) {
+    alert("Please fill all fields and select admission status.");
+    return;
+  }
+
+  // Define the student object with setters and getters
+  
+
+  newStudent.nameFunc = studentName;
+  newStudent.classFunc = studentClass;
+  newStudent.admittedStatus = admittedValue;
+
+  studentArray.push(newStudent);
+
+  // Debug output
+  console.log(`${newStudent.getName} is the student name`);
+  console.log("New Entry:", newStudent);
+  console.log("Complete Array:", studentArray);
+}
+</script>
+
+</body>
+</html>
