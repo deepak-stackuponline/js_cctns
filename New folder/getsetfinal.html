@@ -20,15 +20,8 @@
   <div>
     <input type="text" id="name" placeholder="Student Name" />
     
-    <select id="studentClass">
-      <option value="">Select Class</option>
-      <option value="5th">5th Standard</option>
-      <option value="6th">6th Standard</option>
-      <option value="7th">7th Standard</option>
-      <option value="8th">8th Standard</option>
-      <option value="9th">9th Standard</option>
-      <option value="10th">10th Standard</option>
-    </select>
+    <select id="studentClass"></select>
+    
 
     <div id="admissionStatusSection" style="display:none;" class="form-section">
       <label>Admission Status: </label>
@@ -60,131 +53,158 @@
   <script>
     let students = [];
     let editIndex = -1;
-    const newStudent = {
-        name: "",
-        class: "",
-        isAdmitted: "",
 
-        set nameFunc(namedata) {
-          this.name = namedata;
-        },
+  const newStudent = {
+    name: "",
+    class: "",
+    isAdmitted: "",
 
-        set classFunc(classdata) {
-          this.class = classdata;
-        },
+    set nameFunc(namedata) {
+      this.name = namedata;
+    },
 
-        set admittedStatus(status) {
-          this.isAdmitted = status;
-        },
+    set classFunc(classdata) {
+      this.class = classdata;
+    },
 
-        get getName() {
-          return this.name;
-        }
+    set admittedStatus(status) {
+      this.isAdmitted = status;
+    },
+
+    get getName() {
+      return this.name;
+    }
   };
 
-    function addStudent() {
-      const name = document.getElementById("name").value.trim();
-      const studentClass = document.getElementById("studentClass").value;
+  function addStudent() {
+    const name = document.getElementById("name").value.trim();
+    const studentClass = document.getElementById("studentClass").value;
 
-      if (!name || !studentClass) {
-        alert("Please fill out all fields.");
-        return;
-      }
-     
-      newStudent.nameFunc=name;
-      newStudent.classFunc=studentClass;
-      newStudent.admittedStatus="no";
-      console.log(newStudent)
-      // const studentsObj = {
-      //                   name: name,
-      //                   studentClass: studentClass,
-      //                   isAdmitted: "no"
-      // };
-     students.push(studentsObj);
-
-    // console.log(studentsObj);
-    // console.log(students);
-  clearForm();
-  renderTable();
-}
-
-    function editStudent(index) {
-      const student = students[index];
-      document.getElementById("name").value = student.name;
-      document.getElementById("studentClass").value = student.studentClass;
-
-      document.getElementById("admissionStatusSection").style.display = "block";
-      const admittedInputs = document.getElementsByName("isAdmitted");
-      admittedInputs.forEach(input => {
-        input.checked = (input.value === student.isAdmitted);
-      });
-
-      document.getElementById("addBtn").style.display = "none";
-      document.getElementById("updateBtn").style.display = "inline";
-      document.getElementById("cancelBtn").style.display = "inline";
-
-      editIndex = index;
+    if (!name || !studentClass) {
+      alert("Please fill out all fields.");
+      return;
     }
 
-    function updateStudent() {
-      const name = document.getElementById("name").value.trim();
-      const studentClass = document.getElementById("studentClass").value;
-      const admission = document.querySelector('input[name="isAdmitted"]:checked');
+    newStudent.nameFunc = name;
+    newStudent.classFunc = studentClass;
+    newStudent.admittedStatus = "no";
 
-      students[editIndex] = {
-        name,
-        studentClass,
-        isAdmitted: admission.value
-      };
+    const studentObj = Object.assign({}, newStudent);
+    students.push(studentObj);
 
-      clearForm();
+    console.log(studentObj);
+    console.log(students)
+
+    clearForm();
+    renderTable();
+  }
+
+  function editStudent(index) {
+    const student = students[index];
+    document.getElementById("name").value = student.name;
+    document.getElementById("studentClass").value = student.class;
+
+    document.getElementById("admissionStatusSection").style.display = "block";
+    const yesRadio = document.querySelector('input[name="isAdmitted"][value="yes"]');
+    const noRadio = document.querySelector('input[name="isAdmitted"][value="no"]');
+    if (student.isAdmitted === "yes") {
+      yesRadio.checked = true;
+    } else {
+      noRadio.checked = true;
+    }
+
+    document.getElementById("addBtn").style.display = "none";
+    document.getElementById("updateBtn").style.display = "inline";
+    document.getElementById("cancelBtn").style.display = "inline";
+
+    editIndex = index;
+  }
+
+  function updateStudent() {
+    const name = document.getElementById("name").value.trim();
+    const studentClass = document.getElementById("studentClass").value;
+    const admission = document.querySelector('input[name="isAdmitted"]:checked');
+
+    if (!name || !studentClass || !admission) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    const updatedStudent = Object.assign({}, {
+      name: name,
+      class: studentClass,
+      isAdmitted: admission.value
+    });
+
+    students[editIndex] = updatedStudent;
+    clearForm();
+    renderTable();
+  }
+
+  function cancelEdit() {
+    clearForm();
+  }
+
+  function deleteStudent(index) {
+    if (confirm("Are you sure you want to delete this student?")) {
+      students.splice(index, 1);
       renderTable();
     }
+  }
 
-    function cancelEdit() {
-      clearForm();
-    }
+  function renderTable() {
+    const tableBody = document.getElementById("studentTableBody");
+    tableBody.innerHTML = "";
 
-    function deleteStudent(index) {
-      if (confirm("Are you sure you want to delete this student?")) {
-        students.splice(index, 1);
-        renderTable();
-      }
-    }
+    students.forEach(function(student, index){
+      tableBody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${student.name}</td>
+          <td>${student.class}</td>
+          <td>${student.isAdmitted === "yes" ? "Admitted" : "Not Admitted"}</td>
+          <td>
+            <button onclick="editStudent(${index})">Edit</button>
+            <button onclick="deleteStudent(${index})">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
 
-    function renderTable() {
-      const tableBody = document.getElementById("studentTableBody");
-      tableBody.innerHTML = "";
+  function clearForm() {
+    document.getElementById("name").value = '';
+    document.getElementById("studentClass").value = '';
+    document.getElementById("admissionStatusSection").style.display = "none";
 
-      students.forEach((student, index) => {
-        tableBody.innerHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${student.name}</td>
-            <td>${student.studentClass}</td>
-            <td>${student.isAdmitted === "yes" ? "Admitted" : "Not Admitted"}</td>
-            <td>
-              <button onclick="editStudent(${index})">Edit</button>
-              <button onclick="deleteStudent(${index})">Delete</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
+    const checkedRadio = document.querySelector('input[name="isAdmitted"]:checked');
+    if (checkedRadio) checkedRadio.checked = false;
 
-    function clearForm() {
-      document.getElementById("name").value = '';
-      document.getElementById("studentClass").value = '';
-      document.getElementById("admissionStatusSection").style.display = "none";
+    document.getElementById("addBtn").style.display = "inline";
+    document.getElementById("updateBtn").style.display = "none";
+    document.getElementById("cancelBtn").style.display = "none";
 
-      document.getElementsByName("isAdmitted").forEach(input => input.checked = false);
+    editIndex = -1;
+  }
 
-      document.getElementById("addBtn").style.display = "inline";
-      document.getElementById("updateBtn").style.display = "none";
-      document.getElementById("cancelBtn").style.display = "none";
+  const classOptions = ["5th", "6th", "7th", "8th", "9th", "10th"];
 
-      editIndex = -1;
-    }
+  function populateClassDropdown() {
+  const select = document.getElementById("studentClass");
+  select.innerHTML = '<option value="">Select Class</option>'; // default option
+
+  classOptions.forEach(function(cls) {
+    const option = document.createElement("option");
+    option.value = cls;
+    option.textContent = `${cls} Standard`;
+    select.appendChild(option);
+
+  });
+}
+
+// Call it on page load
+populateClassDropdown();
+
   </script>
 
 </body>
