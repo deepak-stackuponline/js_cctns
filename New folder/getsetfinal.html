@@ -90,7 +90,11 @@
     newStudent.admittedStatus = "no";
 
     const studentObj = Object.assign({}, newStudent);
-    students.push(studentObj);
+    //students.push(studentObj);
+    //students.unshift(studentObj); //Adds object at the begnning of the array
+    //students = students.concat(studentObj);
+    students = [...students, studentObj]; //Spread operator
+    //students[students.length] = studentObj;
 
     console.log(studentObj);
     console.log(students)
@@ -178,8 +182,9 @@
     document.getElementById("admissionStatusSection").style.display = "none";
 
     const checkedRadio = document.querySelector('input[name="isAdmitted"]:checked');
-    if (checkedRadio) checkedRadio.checked = false;
-
+    if (checkedRadio) {
+            checkedRadio.checked = false;
+              }
     document.getElementById("addBtn").style.display = "inline";
     document.getElementById("updateBtn").style.display = "none";
     document.getElementById("cancelBtn").style.display = "none";
