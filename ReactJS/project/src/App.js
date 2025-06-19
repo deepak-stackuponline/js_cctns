@@ -1,25 +1,59 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React from 'react';
+import AppMenu from './components/header/AppMenu';
+import AppName from './components/header/AppName';
+
 
 function App() {
+
+  const name = 'Deepak';
+
+  const a = 20;
+  const b = 30;
+
+  const message = () => {
+    return 'Hello, this is a message!';
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    
+
+<div>
+
+<AppMenu/>
+<AppName />
+
+</div>
+
+);
 }
 
+
+function Row(){
+  return(
+
+      <>
+     
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+        </tr>
+      
+  </>
+  )
+};
+
+function Column(){
+  return(
+    <>
+      
+        <tr>
+          <td>Deepak</td>
+          <td>Delhi</td>
+        </tr>
+     </> 
+  
+  )
+};
 export default App;
