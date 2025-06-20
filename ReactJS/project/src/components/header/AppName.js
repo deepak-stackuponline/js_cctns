@@ -1,8 +1,14 @@
 import React from 'react'
 
 function AppName() {
+
+
+  const headingStyle = {color: "blue"};
   return (
-    <div>AppName</div>
+    
+
+    // <div style={{color:"red"}}>AppName</div>
+    <div style={headingStyle}>Hello App Name </div>
   )
 }
 
