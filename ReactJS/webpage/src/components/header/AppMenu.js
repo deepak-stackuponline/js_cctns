@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import AppMenuAvatar from './AppMenuAvatar';
 import './AppMenu.css';
 
 function AppMenu() {
   const [activeItem, setActiveItem] = useState('Home');
 
-
   const [menuItems, setMenuItems] = useState([]);
+
+
 
 
     async function fetchData() {
       try {
         const response = await fetch("https://mocki.io/v1/08252512-b32e-45cc-a3d8-0bb4db9d0760");
+        //const response = await fetch("https://mocki.io/v1/3f6a090a-72bd-4457-bd30-afd109eb7a5f");
+        
         const data = await response.json();
         setMenuItems(data.menuItems);
       } catch (error) {
@@ -21,7 +24,7 @@ function AppMenu() {
     fetchData();
 
 
-// const menuItems = [];
+
 
 
 
