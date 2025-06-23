@@ -13,6 +13,8 @@ function AppMenu() {
   //   'Profile',
   //   'Name'
   // ];
+const menuItems = [];
+
 
   async function fetchData() {
   try {
@@ -29,6 +31,7 @@ function AppMenu() {
 };
 
 fetchData();
+  
 
 
   return (
