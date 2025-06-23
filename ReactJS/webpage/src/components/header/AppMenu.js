@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppMenuAvatar from './AppMenuAvatar';
 import './AppMenu.css';
 
 function AppMenu() {
   const [activeItem, setActiveItem] = useState('Home');
+
+
+  const [menuItems, setMenuItems] = useState([]);
+
+
+    async function fetchData() {
+      try {
+        const response = await fetch("https://mocki.io/v1/08252512-b32e-45cc-a3d8-0bb4db9d0760");
+        const data = await response.json();
+        setMenuItems(data.menuItems);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+
+
+// const menuItems = [];
+
+
+
+
 
   // const menuItems = [
   //   'Home',
@@ -13,24 +35,7 @@ function AppMenu() {
   //   'Profile',
   //   'Name'
   // ];
-const menuItems = [];
 
-
-  async function fetchData() {
-  try {
-    const response = await fetch("https://mocki.io/v1/cf6f6f40-63f8-4c88-b0ff-a2d4de61287a");
-    const data = await response.json();
-    setActiveItem(data.menuItems);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-  finally{
-
-
-  }
-};
-
-fetchData();
   
 
 
