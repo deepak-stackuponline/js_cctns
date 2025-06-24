@@ -1,9 +1,15 @@
 import React from 'react'
+import CarousalBody from './CarousalBody'
+import FeaturedBooks from './FeaturedBooks'
 
 function BodySection() {
   return (
     <div>
-        <h6>Body Section</h6>
+       
+       
+          <CarousalBody />
+          <FeaturedBooks />
+          
     </div>
   )
 }

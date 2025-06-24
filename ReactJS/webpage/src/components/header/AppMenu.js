@@ -1,34 +1,15 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect, use} from 'react';
 import AppMenuAvatar from './AppMenuAvatar';
 import './AppMenu.css';
 
 function AppMenu() {
   const [activeItem, setActiveItem] = useState('Home');
 
+  //setActiveItem is used to track the currently active menu item which is the state variable.
+  //state function is used to update the state variable.
+
+
   const [menuItems, setMenuItems] = useState([]);
-
-
-
-
-    async function fetchData() {
-      try {
-        const response = await fetch("https://mocki.io/v1/08252512-b32e-45cc-a3d8-0bb4db9d0760");
-        //const response = await fetch("https://mocki.io/v1/3f6a090a-72bd-4457-bd30-afd109eb7a5f");
-        
-        const data = await response.json();
-        setMenuItems(data.menuItems);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-
-
-
-
-
-
-
 
   // const menuItems = [
   //   'Home',
@@ -39,7 +20,35 @@ function AppMenu() {
   //   'Name'
   // ];
 
-  
+
+//effects load after loading the application
+
+    async function fetchData() {
+      try {
+       
+        const response = await fetch("https://mocki.io/v1/3f6a090a-72bd-4457-bd30-afd109eb7a5f");
+        const data = await response.json();
+        setMenuItems(data); 
+        
+       
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+
+
+
+useEffect(()=>{     
+
+ fetchData();
+
+},[]);
+
+
+   
+
+
 
 
   return (
@@ -48,7 +57,7 @@ function AppMenu() {
     {menuItems.map((item) => (
       
 
-      <li key = {item} className="list-inline-item px-1">
+      <li className="list-inline-item px-1">
 
         <a href="#" className={`text-decoration-none menu-link ${activeItem === item ? 'text-dark active' : 'text-secondary'}`}
           

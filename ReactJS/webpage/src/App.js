@@ -6,6 +6,7 @@ import BodySection from "./components/body/BodySection";
 import FooterSection from "./components/footer/FooterSection";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 function App() {
   return (
     <div className="App-custom">
