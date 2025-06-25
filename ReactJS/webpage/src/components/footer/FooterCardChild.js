@@ -3,7 +3,9 @@ import React from 'react'
 
 function FooterCardChild() {
   return (
-    <div>FooterCardChild</div>
+    <div>
+      
+    </div>
   )
 }
 
