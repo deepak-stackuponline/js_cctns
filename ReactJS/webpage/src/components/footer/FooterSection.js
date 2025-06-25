@@ -1,9 +1,12 @@
 import React from 'react'
+import FooterCard from './FooterCard'
+import FooterBottom from './FooterBottom'
 
 function FooterSection() {
   return (
     <div>
-        <h6>FooterSection</h6>
+        <FooterCard />
+        <FooterBottom />
     </div>
   )
 }
