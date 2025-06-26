@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 function SkeletonComponent() {
   return (
-    <>
+    <React.Fragment>
       {Array(4)
         .fill(0)
         .map((unusedParameter, index) => (
@@ -46,7 +46,7 @@ function SkeletonComponent() {
             </div>
           </div>
         ))}
-    </>
+   </React.Fragment>
   );
 }
 
