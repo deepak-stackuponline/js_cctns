@@ -2,7 +2,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import FooterCardChild from './FooterCardChild'; 
+ 
 
 function FooterCard() {
 
@@ -49,7 +49,7 @@ function FooterCard() {
       ))}
     </div>
 
-    <FooterCardChild />
+
 
     </div>
   )
