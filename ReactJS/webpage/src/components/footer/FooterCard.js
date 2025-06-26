@@ -1,33 +1,36 @@
 
 import React from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
  
 
 function FooterCard() {
 
-    const cardData = [
-  {
-    icon: 'bi-book',
-    title: 'Discover & Read',
-    text: 'Explore a vast collection of books. Buy your favorites or rent them for a period.',
-  },
-  {
-    icon: 'bi-people',
-    title: 'List Your Books',
-    text: 'Share your collection. Easily list books for sale or rent to other valid readers.',
-  },
-  {
-    icon: 'bi-star',
-    title: 'Get Recommendations',
-    text: 'Our AI suggests books tailored to your taste based on your reading history.',
-  },
-  {
-    icon: 'bi-globe',
-    title: 'Join the Community',
-    text: 'Connect with fellow readers and be part of a literary network.',
-  },
-];
+
+
+  const [footercard, setFooterCard] = useState([]);
+  
+  
+    async function fetchData() {
+      try {
+        
+        const response = await fetch("https://mocki.io/v1/55a3df14-8998-416c-bc93-7947dc24748d");
+        const data = await response.json();
+        setFooterCard(data);
+    
+  
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        
+      }
+    }
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
+  
+
   return (
 
     <div>
@@ -35,8 +38,9 @@ function FooterCard() {
 
 
   
+
    <div className="d-flex flex-wrap justify-content-center" style={{ gap: '20px' }}>
-      {cardData.map((card, index) => (
+      {footercard.map((card, index) => (
         <div className="card text-center shadow-lg" style={{ width: '18rem' }} key={index}>
           <div className="card-body">
             <div className="mb-3">
@@ -46,6 +50,8 @@ function FooterCard() {
             <p className="card-text">{card.text}</p>
           </div>
         </div>
+
+
       ))}
     </div>
 
