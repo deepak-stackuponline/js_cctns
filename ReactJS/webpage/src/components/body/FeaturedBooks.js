@@ -39,7 +39,7 @@ function FeaturedBooks() {
   }, []);
 
   // Set a default skeleton count when books are not yet loaded
-  const skeletonCount = books.length > 0 ? books.length : 4;
+  
 
   return (
     <div>
@@ -47,7 +47,7 @@ function FeaturedBooks() {
 
       <div className="d-flex flex-wrap justify-content-center container mt-4">
         {loading ? (
-          <SkeletonComponent countofSkeleton={skeletonCount} />
+          <SkeletonComponent/>
         ) : (
           books.map((data) => <Cards key={data.id} book={data} />)
         )}

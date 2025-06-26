@@ -2,12 +2,12 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-function SkeletonComponent({ countofSkeleton }) {
+function SkeletonComponent() {
   return (
     <>
-      {Array(countofSkeleton)
+      {Array(4)
         .fill(0)
-        .map((_, index) => (
+        .map((unusedParameter, index) => (
           <div key={index} className="card m-2" style={{ width: '18rem' }}>
             
 
