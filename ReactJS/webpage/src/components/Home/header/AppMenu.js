@@ -10,20 +10,12 @@ function AppMenu() {
 
   useEffect(() => {
     fetch("https://mocki.io/v1/4cd0ada5-469f-4526-a4d5-bc3ad31a6785")
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => setMenuItems(data))
-
-
-
-      .catch(() => setMenuItems([
-
-
-
-        console.error("Error fetching "),
-      
-
-      ]));
-
+      .catch(error => {
+        console.error("Error fetching menu items:", error);
+        setMenuItems([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -35,7 +27,11 @@ function AppMenu() {
       <ul className="list-inline m-0 d-flex align-items-center">
         {menuItems.map((item, index) => (
           <li key={item.name + index} className="list-inline-item px-1">
-            <Link to={item.route} className={`text-decoration-none menu-link ${activeRoute === item.route ? 'text-dark active' : 'text-secondary'}`}
+            <Link 
+              to={item.route} 
+              className={`text-decoration-none menu-link ${
+                activeRoute === item.route ? 'text-dark active' : 'text-secondary'
+              }`}
               onClick={() => setActiveRoute(item.route)}
             >
               {item.name}

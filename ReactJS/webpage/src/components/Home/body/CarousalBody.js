@@ -1,10 +1,20 @@
 import React from 'react';
 import './Carousal.css';
+import { useNavigate } from 'react-router-dom';
+
 
 function CarousalBody() {
     const Literary = "Literary Ledger";
-  return (
-    <div className="container d-flex align-items-center justify-content-center mt-2 carousal">
+
+
+       const navigate = useNavigate();
+
+    const browseButtonClick = () => {
+        navigate('/browse');
+    }
+
+    return (
+        <div className="container d-flex align-items-center justify-content-center mt-2 carousal">
       <div className="text-center">
       <h1 className="display-4 mb-3 fw-semibold" style={{ fontSize: '3.2rem' }}>
   Welcome to 
@@ -27,7 +37,7 @@ function CarousalBody() {
         className="form-control small-input" style={{backgroundColor: 'rgb(195, 192, 192)'}}
         placeholder="Search for books, authors, genres"
       />
-      <button className="custom-button small-input">Search</button>
+      <button className="custom-button small-input" onClick={browseButtonClick}>Search</button>
     </div>
   </div>
 </div>
@@ -37,9 +47,11 @@ function CarousalBody() {
 
 
 
-        <button className="browse-book mt-0">
-  Browse All Books <i className="fas fa-arrow-right"></i>
-</button>
+      
+          <button className="browse-book mt-0" onClick={browseButtonClick}>
+                    Browse All Books <i className="fas fa-arrow-right"></i>
+                </button>
+    
       </div>
     </div>
   );
