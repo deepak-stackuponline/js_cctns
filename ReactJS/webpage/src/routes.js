@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import BodySection from './components/Home/body/BodySection';
 import FooterSection from './components/Home/footer/FooterSection';
 import BrowseBooks from './components/Browse/BrowseBooks';
@@ -8,21 +8,21 @@ import ProfileSection from './components/Profile/ProfileSection';
 import GetRecommendations from './components/Recommendations/GetRecommendations';
 
 function AppRoutes() {
-  const location = useLocation();
+ 
 
   return (
     <div>
-      <Routes>
+    <Routes>
         <Route path="/" element={<BodySection />} />
         <Route path="/browse" element={<BrowseBooks />} />
         <Route path="/list" element={<ListBooks />} />
         <Route path="/recommendations" element={<GetRecommendations />} />
         <Route path="/profile" element={<ProfileSection />} />
-      </Routes>
+    </Routes>
       
-     <Routes>
+    <Routes>
         <Route path="/" element={<FooterSection />} />
-      </Routes>
+    </Routes>
     </div>
   );
 }

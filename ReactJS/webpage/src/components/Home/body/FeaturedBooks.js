@@ -3,14 +3,14 @@ import Cards from './Cards';
 import SkeletonComponent from './SkeletonComponent';
 
 function FeaturedBooks() {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
 
-  //const [loading,setLoading] = useState(false); 
+  const [loading,setLoading] = useState(false); 
 
   async function fetchData() {
     try {
-      // setLoading(true);
+      setLoading(true);
       const response = await fetch("https://mocki.io/v1/eeaf0d91-66bb-4906-ac38-69215b782ca7");
       const data = await response.json();
 
@@ -19,15 +19,12 @@ function FeaturedBooks() {
 
 
 
-      setTimeout(() => {
-        setBooks(data);
-        setLoading(false); // Set loading to false after the delay
-      }, 4000);
+
 
 
       
-      // setBooks(data);
-      // setLoading(false);
+      setBooks(data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
