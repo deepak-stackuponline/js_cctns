@@ -4,8 +4,6 @@ import React from 'react';
 function Cards({book}) {
   
   return (
-    <div className="d-flex flex-wrap justify-content-center">
-
         <div className="card m-3 shadow-lg" style={{ width: '18rem' }} key={book.id}>
           <img
             src={book.image}
@@ -35,8 +33,6 @@ function Cards({book}) {
             <button className="btn btn-light w-100 border fw-semibold">View Details</button>
           </div>
         </div>
-      
-    </div>
   );
 }
 

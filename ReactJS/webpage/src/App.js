@@ -1,9 +1,9 @@
 import "./App.css";
 import "./App.scss";
 import React from "react";
-import HeaderSection from "./components/header/HeaderSection";
-import BodySection from "./components/body/BodySection";
-import FooterSection from "./components/footer/FooterSection";
+import HeaderSection from "./components/Home/header/HeaderSection";
+import BodySection from "./components/Home/body/BodySection";
+import FooterSection from "./components/Home/footer/FooterSection";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
