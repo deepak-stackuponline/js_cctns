@@ -1,25 +1,24 @@
 import "./App.css";
 import "./App.scss";
 import React from "react";
+import { BrowserRouter as Router } from 'react-router-dom';
 import HeaderSection from "./components/Home/header/HeaderSection";
-import BodySection from "./components/Home/body/BodySection";
-import FooterSection from "./components/Home/footer/FooterSection";
+import AppRoutes from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
 function App() {
   return (
-    <div className="App-custom">
-      <div className="container">
-        <HeaderSection />
+    <Router>
+      <div className="App-custom">
+        <div className="container">
+          <HeaderSection />
+        </div>
+        <div>
+          <AppRoutes />
+        </div>
       </div>
-      <div>
-        <BodySection />
-      </div>
-      <div>
-        <FooterSection />
-      </div>
-    </div>
+    </Router>
   );
 }
 
