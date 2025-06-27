@@ -5,7 +5,7 @@ function ListBooks() {
     <div className="container mt-4">
       <h2>Book List</h2>
       <p>Here you can view your book list.</p>
-      {/* Add your list books content here */}
+   
     </div>
   )
 }

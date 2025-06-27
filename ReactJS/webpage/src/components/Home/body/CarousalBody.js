@@ -24,7 +24,7 @@ function CarousalBody() {
     <div className="input-group mb-3 centered-input-group">
       <input
         type="text"
-        className="form-control small-input"
+        className="form-control small-input" style={{backgroundColor: 'rgb(195, 192, 192)'}}
         placeholder="Search for books, authors, genres"
       />
       <button className="custom-button small-input">Search</button>

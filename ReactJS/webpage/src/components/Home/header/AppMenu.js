@@ -19,15 +19,9 @@ function AppMenu() {
 
 
 
-        console.error("Error fetching menu items, using default items"),
+        console.error("Error fetching "),
       
 
-
-        // { name: "Home", route: "/" },
-        // { name: "Browse Books", route: "/browse" },
-        // { name: "List a Book", route: "/list" },
-        // { name: "Get Recommendations", route: "/recommendations" },
-        // { name: "Profile", route: "/profile" }
       ]));
 
   }, []);

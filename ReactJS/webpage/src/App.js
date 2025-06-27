@@ -10,8 +10,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <Router>
-      <div className="App-custom">
-        <div className="container">
+      <div className="hide-scrollbar App-custom" style={{ overflowY: 'scroll', height: '100vh' }}>
+        <div className="container"> 
           <HeaderSection />
         </div>
         <div>
