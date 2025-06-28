@@ -72,36 +72,6 @@ function SkeletonComponent() {
 
 
 
-//           <div key={index} className="card m-3 shadow-lg" style={{ width: '18rem' }}>
-//             <div style={{ height: '180px', objectFit: 'cover' }}>
-//               <Skeleton height={180} style={{ display: 'block' }} />
-//             </div>
-            
-//             <div className="card-body">
-//               <Skeleton height={24} style={{ marginBottom: '8px' }} />
-              
-//               <Skeleton height={16} width="70%" style={{ marginBottom: '10px' }} />
-
-            
-// <div className="mb-2 d-flex" style={{ gap: '8px' }}>
-//   <Skeleton height={20} width={60} />
-//   <Skeleton height={20} width={50} />
-// </div>
-
-
-
-//               <Skeleton height={16} width="80px" style={{ marginBottom: '15px' }} />
-              
-//               <hr />
-
-//               <div className="d-flex justify-content-between text-muted mb-3">
-//                 <Skeleton height={16} width={80} />
-//                 <Skeleton height={16} width={90} />
-//               </div>
-
-//               <Skeleton height={38} style={{ width: '100%' }} />
-//             </div>
-//           </div>
         ))}
     </React.Fragment>
   );

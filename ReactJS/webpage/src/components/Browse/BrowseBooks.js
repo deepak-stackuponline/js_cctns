@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react';
+import BookSearch from './BookSearch';
 
 function BrowseBooks() {
-  return (
-    <div className="container mt-4">
-      <h2>Browse Books</h2>
-      <p>Here you can browse through our collection of books.</p>
 
+
+  return (
+    <div className="browse-container container mt-2">
+      <h2 className="text-center mb-4">Browse Our Collection</h2>
+
+    <BookSearch />
+      
     </div>
-  )
+  );
 }
 
-export default BrowseBooks
+export default BrowseBooks;

@@ -5,6 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import HeaderSection from "./components/Home/header/HeaderSection";
 import AppRoutes from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
+import FooterFixed from "./components/Home/footer/FooterFixed";
+
 
 
 function App() {
@@ -17,6 +19,9 @@ function App() {
         <div>
           <AppRoutes />
         </div>
+       <div>
+        <FooterFixed />
+       </div>
       </div>
     </Router>
   );

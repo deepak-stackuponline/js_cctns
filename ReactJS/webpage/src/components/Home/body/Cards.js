@@ -15,8 +15,8 @@ function Cards({book}) {
             <h6 className="text-muted mb-2">by {book.author}</h6>
 
             <div className="mb-2">
-              {book.genres.map((Hello, i) => (
-                <span key={i} className="badge bg-light text-dark border me-2">{Hello}</span>
+              {book.genres.map((asd, i) => (
+                <span key={i} className="badge bg-light text-dark border me-2">{asd}</span>
               ))}
             </div>
 
