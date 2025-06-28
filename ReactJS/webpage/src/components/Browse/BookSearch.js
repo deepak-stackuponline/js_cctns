@@ -21,16 +21,23 @@ function BookSearch() {
   async function fetchData() {
     try {
       setLoading(true);
+
       setError(null); 
+
       const response = await fetch('https://mocki.io/v1/faf8dc79-8cd1-44ea-9f37-c31e73c6daa7');
       
       const data = await response.json();
+
       setFilterOptions(data);
+
       setLoading(false);
+
     } catch (error) {
       
       setError('Failed to load data.');
+
       setLoading(false);
+
     }
   }
 
@@ -52,13 +59,15 @@ function BookSearch() {
     });
   }
 
+if(loading){
+  return <div className="loading text-primary">Loading...</div>;
+}
 
-  
-return loading ? (
-  <div className="loading text-primary">Loading...</div>
-) : error ? (
-  <div className="error text-center text-danger">{error}</div>
-) : (
+if(error){
+  return <div className="error text-center text-danger">{error}</div>;
+}
+
+return (
   <div className="filter-container">
      <div className="title-section" style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
       <img src={filter} alt="Filter Icon" className="filter-icon" style={{ width: '24px', height: '24px', marginRight: '8px' }} />
@@ -67,13 +76,7 @@ return loading ? (
     <div className="filter-row">
       <div className="filter-item">
         <label>Search</label>
-        <input
-          type="text"
-          name="search"
-          placeholder="Title or Author..."
-          value={filters.search}
-          onChange={handleChange}
-        />
+        <input type="text" name="search" placeholder="Title or Author..." value={filters.search} onChange={handleChange} />
       </div>
 
       <div className="filter-item">
