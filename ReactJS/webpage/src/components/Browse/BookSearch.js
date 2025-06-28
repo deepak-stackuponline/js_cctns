@@ -8,6 +8,8 @@ function BookSearch() {
     conditions: [],
     availability: []
   });
+
+  
   const [filters, setFilters] = useState({
     search: '',
     genre: '',
