@@ -44,7 +44,7 @@ function AppMenu() {
       <Button className='m-2'onClick={clickHandler}>Login</Button>
       <Button className='m-2 btn-danger'onDoubleClick={()=>doubleClickHandler("Deepak")}>Register</Button>
       <input type='text' onChange={onChangeHandler} className='m-2' placeholder='Type something...' />
-      <h1 className='bg-primary text-center text-white' onMouseOver={onMouseOverHandler}>Welcome to the Book Store</h1>
+      {/* <h1 className='bg-primary text-center text-white' onMouseOver={onMouseOverHandler}>Welcome to the Book Store</h1> */}
 
 
 
